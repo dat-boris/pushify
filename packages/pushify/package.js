@@ -8,11 +8,18 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
-  api.use('ecmascript');
+  api.use([
+    'react',
+    'kadira:flow-router-ssr',
+    'kadira:react-layout',
+    'ecmascript',
+    ]);
   api.addFiles([
     'pushify.js',
+    'router.js',
+    'layouts/home.jsx',
     //'pushify.html'
-    ], ['client']
+    ], ['client','server']
     );
 });
 
@@ -20,5 +27,5 @@ Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
   api.use('sketchytechky:pushify');
-  api.addFiles('pushify-tests.js');
+  api.addFiles('pushify-tests.js', ['client']);
 });
