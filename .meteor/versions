@@ -1,5 +1,4 @@
 accounts-base@1.2.2
-amplify@1.0.0
 autopublish@1.0.4
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
@@ -42,7 +41,6 @@ kadira:flow-router@2.10.0
 kadira:flow-router-ssr@3.0.0
 kadira:react-layout@1.0.1
 launch-screen@1.0.4
-less@2.5.1
 livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
@@ -95,9 +93,7 @@ ui@1.0.8
 underscore@1.0.4
 url@1.0.5
 velocity:chokidar@1.2.0_1
-velocity:console-reporter@0.1.4
 velocity:core@0.10.9
-velocity:html-reporter@0.9.1
 velocity:meteor-internals@1.1.0_7
 velocity:meteor-stubs@1.1.1
 velocity:shim@0.1.0

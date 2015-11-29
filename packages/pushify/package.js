@@ -18,7 +18,7 @@ Package.onUse(function(api) {
     'pushify.js',
     'router.js',
     'layouts/home.jsx',
-    //'pushify.html'
+    'layouts/subscribed.jsx',
     ], ['client','server']
     );
 

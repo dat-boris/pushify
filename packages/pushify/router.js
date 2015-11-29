@@ -3,3 +3,9 @@ FlowRouter.route("/", {
 		ReactLayout.render(HomeLayout);
 	}
 });
+
+FlowRouter.route("/subscribed", {
+	action: function() {
+		ReactLayout.render(SubscribedLayout);
+	}
+});
