@@ -21,11 +21,17 @@ Package.onUse(function(api) {
     //'pushify.html'
     ], ['client','server']
     );
+
+  // XXX: This is only exported for the sake of testing :-(
+  api.export("HomeLayout", "client");
 });
 
 Package.onTest(function(api) {
-  api.use('ecmascript');
-  api.use('tinytest');
-  api.use('sketchytechky:pushify');
-  api.addFiles('pushify-tests.js', ['client']);
+  api.use(['react', 
+    'sanjo:jasmine@0.20.2',
+    'meteorhacks:fast-render@2.10.0',  // workaround bug in https://github.com/kadirahq/fast-render/issues/132
+    'sketchytechky:pushify'
+    ]);
+  
+  api.addFiles('tests/client/component-spec.js', ['client']);
 });
