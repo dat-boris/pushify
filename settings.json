@@ -1,0 +1,7 @@
+{
+	"twilioNumber" : "+12345",
+	"twilioSID" : "xxxxx",
+	"twilioAuth" : "xxxxx",
+	"GCMappID" : "12345",
+	"GCMAuthID" : "xxxxx"
+}
