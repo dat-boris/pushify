@@ -14,6 +14,7 @@ Package.onUse(function(api) {
     'kadira:react-layout',
     'aldeed:collection2',
     'ecmascript',
+    'accolver:twilio-meteor'
     ]);
   api.addFiles([
     'lib/collection.js',

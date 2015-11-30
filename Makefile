@@ -1,5 +1,5 @@
 run-server:
-	meteor
+	meteor run --settings settings.json
 
 test:
 	echo "WARNING: this is still broken"

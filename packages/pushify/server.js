@@ -13,7 +13,23 @@ Meteor.methods({
 	          console.error ( error ); //info about what went wrong
 	          throw error;
 	        }
+
+	        sendTwilio(client_context.tel, client_context.slugname);
 	      }
 	    );
     }
 });
+
+
+function sendTwilio(tel, slugname) {
+  twilio = Twilio(Meteor.settings.twilioSID, Meteor.settings.twilioAuth);
+  twilio.sendSms({
+    to: tel,
+    from: Meteor.settings.twilioNumber,
+    body: 'Please log in at '+
+    		'http://pushify.meteor.com/subscribe/'+slugname+
+    		' to subscribe to Push notification',
+  }, function(err, responseData) {
+  	if (err) throw err;
+  });	
+}
