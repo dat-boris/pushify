@@ -11,6 +11,7 @@ Package.onUse(function(api) {
   api.use([
     'react',
     'kadira:flow-router-ssr',
+    'kadira:dochead',
     'kadira:react-layout',
     'aldeed:collection2',
     'ecmascript',
@@ -32,6 +33,7 @@ Package.onUse(function(api) {
     );
 
   api.addAssets([
+    'assets/manifest.json',
     'assets/service-worker.js'
     ], 'client')
 

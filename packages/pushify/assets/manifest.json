@@ -1,0 +1,12 @@
+{  
+  "name": "Pushify",  
+  "short_name": "Pushify",  
+  "icons": [{  
+        "src": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Gwibber.192x192.png",  
+        "sizes": "192x192",
+        "type": "image/png"
+      }],  
+  "start_url": "/",  
+  "display": "standalone",  
+  "gcm_sender_id": "212012094891"
+}
