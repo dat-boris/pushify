@@ -51,3 +51,41 @@ function sendTwilio(tel, slugname) {
       if (err) throw err;
   });    
 }
+
+
+sendNotification = function (slugname, msg, callback) {
+// curl --header "Authorization: key=AIzaSyA3CWIXH1hN8ZLcxrlDilLdndbnmBtrI8o" --header \
+//     "Content-Type: application/json" https://android.googleapis.com/gcm/send -d \
+//     "{\"registration_ids\":[\"fivXnZp7ePs:APA91bF73_lo7clpJXoSg3N3N172rS4VK2alXpSI_1SpWHIEChO4Q_qgjekp_Ee6tMruD-_uBQEEG8pTS5Ujbbyh3WgRn8AhWIZcu7zoAKWD6pVBJ1VmW8z2SuRLfjuC43cLKZpG0_Wx\"]}"
+
+  reg_ids = Signins.find({
+    slugname: slugname,
+  }).map(function (signin) {
+    var reg_id = signin.subscription_reg_id;
+    if (reg_id) {
+      return reg_id.split('/').pop();
+    }
+  });
+
+  console.log("Posting to: "+reg_ids)
+
+  var header = {
+        'Authorization' : 'key='+Meteor.settings.GCMAuthID,
+        'Content-Type' : 'application/json'
+      };
+  console.log("User header: "+header.Authorization);
+
+  HTTP.post(
+    "https://android.googleapis.com/gcm/send",
+    {
+      'headers' : header,
+      'content' : JSON.stringify({
+          registration_ids : reg_ids
+      })
+    }, function (err, result) {
+
+      if (err) throw err;
+      console.log("Sucessfully pushed message! "+result);
+      callback(null, result.content);
+    });
+}
