@@ -12,9 +12,11 @@ Package.onUse(function(api) {
     'react',
     'kadira:flow-router-ssr',
     'kadira:react-layout',
+    'aldeed:collection2',
     'ecmascript',
     ]);
   api.addFiles([
+    'lib/collection.js',
     'pushify.js',
     'router.js',
     'layouts/home.jsx',
