@@ -23,6 +23,10 @@ Package.onUse(function(api) {
     'layouts/subscribed.jsx',
     ], ['client','server']
     );
+    api.addFiles([
+    'server.js',
+    ], ['server']
+    );
 
   // XXX: This is only exported for the sake of testing :-(
   api.export("HomeLayout", "client");

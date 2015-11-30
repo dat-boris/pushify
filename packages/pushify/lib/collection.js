@@ -46,7 +46,7 @@ SigninSchema = new SimpleSchema({
 
   "subscription_useragent" : {
   	type: String,
-  	label: "User's User Agent",
+  	label: "Subscription's User Agent",
     optional : true
   },
 
