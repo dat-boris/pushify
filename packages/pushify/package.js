@@ -29,6 +29,10 @@ Package.onUse(function(api) {
     ], ['server']
     );
 
+  api.addAssets([
+    'assets/service-worker.js'
+    ], 'client')
+
   // XXX: This is only exported for the sake of testing :-(
   api.export("HomeLayout", "client");
 });

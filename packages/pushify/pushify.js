@@ -1,8 +1,23 @@
 /**
  * Function for setting up subscription
  */
+var serviceWorkerUrl = '/packages/sketchytechky_pushify/assets/service-worker.js';
+
 // Once the service worker is registered set the initial state  
-subscribePushNotification = function (tel, slugname) {  
+subscribePushNotification = function (tel, slugname) {
+    // Check that service workers are supported, if so, progressively  
+    // enhance and add push messaging support, otherwise continue without it.  
+    if ('serviceWorker' in navigator) {  
+      navigator.serviceWorker.register(serviceWorkerUrl)  
+      .then(function () {
+      	initialiseState(tel, slugname);
+      });  
+    } else {  
+      console.warn('Service workers aren\'t supported in this browser.');  
+    }  
+}
+
+function initialiseState(tel, slugname) {  
     // Are Notifications supported in the service worker?  
     if (!('showNotification' in ServiceWorkerRegistration.prototype)) {  
       console.warn('Notifications aren\'t supported.');  
