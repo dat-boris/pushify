@@ -2,7 +2,7 @@
 Picker.route('/push_msg', function(params, req, res, next) {
   //var post = Posts.findOne(params._id);
   sendNotification(
-    "0.41255909763276577",  // slug
+    "test-slug",  // slug
     "hola", // message
     function (err, result) {
         res.end(result);
@@ -57,7 +57,7 @@ function sendTwilio(tel, slugname) {
     to: tel,
     from: Meteor.settings.twilioNumber,
     body: 'Please log in at '+
-            'http://pushify.meteor.com/subscribe/'+slugname+
+            'https://pushify.meteor.com/subscribe/'+ //slugname+
             ' to subscribe to Push notification',
   }, function(err, responseData) {
       if (err) throw err;

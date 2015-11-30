@@ -9,13 +9,12 @@ HomeLayout = React.createClass({
     Meteor.call("submit_tel", {
       'useragent' : navigator.userAgent,
       'tel' : tel,
-      'slugname' : Math.random().toString(),
+      'slugname' : "test-slug",
     },
     function( error, result) { 
       if ( error ) {
         console.error ( error ); //info about what went wrong
-        debugger;
-          throw error;
+        throw error;
       } else {
         FlowRouter.go('/subscribed/');
       }

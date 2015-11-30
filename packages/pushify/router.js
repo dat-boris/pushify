@@ -21,7 +21,7 @@ FlowRouter.route("/subscribe", {
 
         subscribePushNotification(
             "+17783205321",  // telnumber
-            "0.41255909763276577"  // slug
+            "test-slug"  // slug
             );
         ReactLayout.render(SubscribedLayout);
     }
