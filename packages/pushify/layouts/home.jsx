@@ -24,15 +24,17 @@ HomeLayout = React.createClass({
   },
 
   render() {
-  	return <div id='home'>
-    <h1>Simply push notification to your device!</h1>
+  	return <div className='content'>
+    <section id="about" className="extra-top">
+      <h1>Simply push notification to your device!</h1>
 
-    <h3>Try now</h3>
+      <h3>Try now</h3>
 
-    <form onSubmit={this.submitTel}>
-      <input type="tel" ref="usrtel" placeholder="Enter tel here"/>
-      <input type="submit"/>
-    </form>
+      <form onSubmit={this.submitTel}>
+        <input type="tel" ref="usrtel" placeholder="Enter tel here"/>
+        <input type="submit"/>
+      </form>
+    </section>
 
 	</div>;
   }
