@@ -16,8 +16,9 @@ SubscribedLayout = React.createClass({
     curl -d "Message" http://pushify.io/publish/{this.state.slug_name}
     </pre>
 
-    <input type="tel" name="usrtel" placeholder="Subscribe another phone"/>
-    <input type="submit" onClick={this.submitTel}/>
+    <form onSubmit={this.submitTel}>
+      <input type="tel" name="usrtel" placeholder="Subscribe another phone"/>
+    </form>
 
 	</div>;
   }
