@@ -1,23 +1,36 @@
 
-Picker.route('/push_msg', function(params, req, res, next) {
+Picker.route('/pushmsg/:slugname', function(params, req, res, next) {
   //var post = Posts.findOne(params._id);
+
+  var slugname = params.slugname;
+  if (!slugname) {
+    throw "No slugname specified!";
+  }
   sendNotification(
-    "test-slug",  // slug
-    "hola", // message
+    slugname,  // slug
+    "Adding the messages to be sent", // message
     function (err, result) {
         res.end(result);
     }
     )
 });
 
+/**
+ * A function used to replace the alpha numeric characters
+ * NOTE: this is a work around as FlowRouter.getParam does not handle URLEscape character properly
+ */
+function stripNonAlphaNumeric(tel) {
+  return tel.replace(/\W/g, '')
+}
+
 Meteor.methods({
     submit_tel: function (client_context) {
 
         Signins.insert({
           initial_cookie_id : Math.random().toString(),
-          initial_ip : "123.123.123.123",
+          initial_ip : this.connection.clientAddress,
           initial_useragent : client_context.useragent,
-          tel: client_context.tel,
+          tel: stripNonAlphaNumeric(client_context.tel),
           slugname : client_context.slugname,
           }, 
           function( error, result) { 
@@ -32,32 +45,40 @@ Meteor.methods({
     },
 
     update_subscription : function (tel, slugname, user_agent, subscription_endpoint) {
+        clean_tel = stripNonAlphaNumeric(tel);
+        console.log("Updating subscription with: "+slugname+":"+clean_tel);
         //https://android.googleapis.com/gcm/send/fmp6dSw7DNY:APA91bG-JwIvlJey6lwLnjs…_ASLe8LwJJLXEzOKZ_BrwD6hc0SdIp7bs_PtkXc2dEocQY6s8bLcP-5h11K9WEPtCVgprJog1z
-        Signins.update(
+        result = Signins.update(
             {
                 slugname: slugname,
-                tel : tel,
+                tel : clean_tel,
             },
             {
                 $set: {
-                    subscription_ip : "123.123.123.1",
+                    subscription_ip : this.connection.clientAddress,
                     subscription_useragent : user_agent,
                     subscribed_at : new Date(),
                     subscription_reg_id : subscription_endpoint,
                 }
             }
-        );        
+        );
+        if (!result) {
+          var err = "No result found with: "+slugname+":"+clean_tel+"("+result+")";
+          console.error(err);
+          throw err;
+        }
     }
 });
 
 
 function sendTwilio(tel, slugname) {
+  console.log("Sending message to: "+tel);
   twilio = Twilio(Meteor.settings.twilioSID, Meteor.settings.twilioAuth);
   twilio.sendSms({
     to: tel,
     from: Meteor.settings.twilioNumber,
     body: 'Please log in at '+
-            'https://pushify.meteor.com/subscribe/'+ //slugname+
+            'https://pushify.meteor.com/subscribe/'+slugname+'/'+encodeURIComponent(tel)+
             ' to subscribe to Push notification',
   }, function(err, responseData) {
       if (err) throw err;
@@ -70,6 +91,7 @@ sendNotification = function (slugname, msg, callback) {
 //     "Content-Type: application/json" https://android.googleapis.com/gcm/send -d \
 //     "{\"registration_ids\":[\"fivXnZp7ePs:APA91bF73_lo7clpJXoSg3N3N172rS4VK2alXpSI_1SpWHIEChO4Q_qgjekp_Ee6tMruD-_uBQEEG8pTS5Ujbbyh3WgRn8AhWIZcu7zoAKWD6pVBJ1VmW8z2SuRLfjuC43cLKZpG0_Wx\"]}"
 
+  console.log("Looking for id:"+slugname);
   reg_ids = Signins.find({
     slugname: slugname,
   }).map(function (signin) {
@@ -79,7 +101,13 @@ sendNotification = function (slugname, msg, callback) {
     }
   });
 
-  console.log("Posting to: "+reg_ids)
+  if (!reg_ids.length) {
+    var err = "No subscription found!"
+    console.error(err);
+    throw err;
+  }
+
+  console.log("Posting to: "+reg_ids);
 
   var header = {
         'Authorization' : 'key='+Meteor.settings.GCMAuthID,

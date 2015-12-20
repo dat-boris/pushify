@@ -1,4 +1,17 @@
 
+## Routing summary
+
+The current URL schema / site map looks like:
+
+Client side (see `router.js`):
+* home
+* `/subscribed/<slugname>` - display subscribed message and allow adding subscription
+* `/subscribe/<slugname>` - allow subscribing to specific messages
+
+Server side (see `server.js`):
+* `/pushmsg/<slugname>` - for sending subscriptions.
+
+
 ## MANIFEST
 
 * `package.js` - describe package dependencies

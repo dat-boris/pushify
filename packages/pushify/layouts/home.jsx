@@ -6,17 +6,21 @@ HomeLayout = React.createClass({
     // Find the text field via the React ref
     var tel = ReactDOM.findDOMNode(this.refs.usrtel).value.trim();
 
+    // generate a random string of length 5
+    // from http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript
+    var random_slug = Math.random().toString(36).substring(2,7);
+
     Meteor.call("submit_tel", {
       'useragent' : navigator.userAgent,
       'tel' : tel,
-      'slugname' : "test-slug",
+      'slugname' : random_slug,
     },
     function( error, result) { 
       if ( error ) {
         console.error ( error ); //info about what went wrong
         throw error;
       } else {
-        FlowRouter.go('/subscribed/');
+        FlowRouter.go('/subscribed/'+random_slug);
       }
     }
     )

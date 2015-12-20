@@ -1,8 +1,7 @@
 SubscribedLayout = React.createClass({
-  getInitialState () {
-    return {
-      'slug_name' : 'test-slug-name'
-    };
+
+  getSlugName() {
+    return FlowRouter.getParam('slugname');
   },
 
   render() {
@@ -13,7 +12,7 @@ SubscribedLayout = React.createClass({
       <li>Post to the following URL</li>
     </ol>
     <pre>
-    curl -d "Message" http://pushify.io/publish/{this.state.slug_name}
+    curl -d "Message" http://pushify.io/pushmsg/{this.getSlugName()}
     </pre>
 
     <form onSubmit={this.submitTel}>

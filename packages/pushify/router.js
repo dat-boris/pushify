@@ -4,17 +4,17 @@ FlowRouter.route("/", {
     }
 });
 
-FlowRouter.route("/subscribed", {
+FlowRouter.route("/subscribed/:slugname", {
     action: function() {
         ReactLayout.render(SubscribedLayout);
     }
 });
 
-FlowRouter.route("/subscribe", {
+FlowRouter.route("/subscribe/:slugname/:tel", {
     action: function() {
         subscribePushNotification(
-            "+17783205321",  // telnumber
-            "test-slug"  // slug
+            FlowRouter.getParam('tel'),
+            FlowRouter.getParam('slugname')
             );
         ReactLayout.render(SubscribedLayout);
     }
