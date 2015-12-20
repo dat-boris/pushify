@@ -28,7 +28,7 @@ HomeLayout = React.createClass({
     <section id="about" className="extra-top">
       <h1>Simply push notification to your device!</h1>
 
-      <h3>Try now</h3>
+      <p>Try now</p>
 
       <form onSubmit={this.submitTel}>
         <input type="tel" ref="usrtel" placeholder="Enter tel here"/>
