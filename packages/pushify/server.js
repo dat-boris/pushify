@@ -15,6 +15,12 @@ Picker.route('/pushmsg/:slugname', function(params, req, res, next) {
     )
 });
 
+Picker.route('/getmsg/', function(params, req, res, next) {
+  res.end(JSON.stringify({
+    'msg' : 'This is a pushfiy message from server'
+  }));
+});
+
 /**
  * A function used to replace the alpha numeric characters
  * NOTE: this is a work around as FlowRouter.getParam does not handle URLEscape character properly

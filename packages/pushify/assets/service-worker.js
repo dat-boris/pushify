@@ -2,19 +2,30 @@
  * Acting and activating the registration
  *****************/
 
+var MSG_API_URL = "https://pushify.meteor.com/getmsg/"
+var MSG_TITLE = "Pushify"
+var MSG_ICON = 'https://pushify.meteor.com/images/icon-192x192.png';
+var MSG_TAG = 'simple-push-demo-notification-tag';
+
 self.addEventListener('push', function(event) {  
   console.log('Received a push message', event);
 
-  var title = 'Yay a message.';  
-  var body = 'We have received a push message.';  
-  var icon = '/images/icon-192x192.png';  
-  var tag = 'simple-push-demo-notification-tag';
+  event.waitUntil(
+    fetch(MSG_API_URL)
+      .then(function(response) {
+        if (response.status !== 200) {
+          throw new Error("Bad result returned")
+        }
+        return response.json();
+      })
+      .then(function(data) {
+        // see https://github.com/gauntface/simple-push-demo/blob/master/app/service-worker.js
+        self.registration.showNotification(MSG_TITLE, {  
+          body: "Msg: "+JSON.stringify(data)+" Evt: "+event,  
+          icon: MSG_ICON,  
+          tag: MSG_TAG  
+        })  
 
-  event.waitUntil(  
-    self.registration.showNotification(title, {  
-      body: body,  
-      icon: icon,  
-      tag: tag  
-    })  
+      })
   );  
 });   
