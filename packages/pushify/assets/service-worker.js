@@ -20,6 +20,8 @@ self.addEventListener('push', function(event) {
       })
       .then(function(data) {
         // see https://github.com/gauntface/simple-push-demo/blob/master/app/service-worker.js
+
+        // https://developers.google.com/cloud-messaging/chrome/client#receive_messages
         self.registration.showNotification(MSG_TITLE, {  
           body: "Msg: "+JSON.stringify(data)+" Evt: "+event,  
           icon: MSG_ICON,  
