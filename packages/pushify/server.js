@@ -6,6 +6,27 @@ Picker.route('/pushmsg/:slugname', function(params, req, res, next) {
   if (!slugname) {
     throw "No slugname specified!";
   }
+
+  // TODO: cannot get post content so using get for now.
+  //http://stackoverflow.com/questions/32705484/how-do-i-access-http-post-body-form-data-with-meteors-webapp-or-anything-els
+  console.log("Setting post content for slug ["+slugname+"]: "+req.body)
+
+  result = Signins.update(
+      {
+          slugname: slugname,
+      },
+      {
+          $set: {
+              message : req.body,
+          }
+      }
+  );
+  if (!result) {
+    var err = "No result found with: "+slugname+":"+clean_tel+"("+result+")";
+    console.error(err);
+    throw err;
+  }
+
   sendNotification(
     slugname,  // slug
     "Adding the messages to be sent", // message
@@ -15,10 +36,28 @@ Picker.route('/pushmsg/:slugname', function(params, req, res, next) {
     )
 });
 
-Picker.route('/getmsg/', function(params, req, res, next) {
-  res.end(JSON.stringify({
-    'msg' : 'This is a pushfiy message from server'
-  }));
+Picker.route('/getmsg/:endpoint', function(params, req, res, next) {
+  var endpoint = decodeURIComponent(params.endpoint);
+
+  console.log("Searching for message: "+endpoint);
+
+  var reg_ids = Signins.find({
+    subscription_reg_id : endpoint
+  }).map(function (signin) {
+    var msg = signin.message;
+    console.log("Got message", msg);
+    res.end(JSON.stringify({
+      'msg' : msg
+    }));
+  });
+
+  if (!reg_ids.length) {
+    var err = "No subscription found!"
+    console.error(err);
+    throw err;
+  }
+
+
 });
 
 /**

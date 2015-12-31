@@ -87,7 +87,57 @@ function makeNewSubscription(tel, slugname, serviceWorkerRegistration) {
       });  
 }
 
+/**
+ * Function responsible for storing the endpoint info in the IndexDB
+ */
+function storeInIndexDB(endpoint) {
+
+  var DB_NAME = "pushify";
+  var DB_TABLE = "subscription";
+  var DB_KEY = 1;
+
+  var request = indexedDB.open(DB_NAME, 2);
+
+  request.onerror = function(event){
+    console.error("DB: Error opening DB", event);
+  };
+
+  request.onupgradeneeded = function(event) {
+    var db = event.target.result;
+    // Create an objectStore to hold information about our customers. We're
+    // going to use "ssn" as our key path because it's guaranteed to be
+    // unique - or at least that's what I was told during the kickoff meeting.
+    var objectStore = db.createObjectStore(DB_TABLE, { keyPath: "id" });
+  };
+
+  request.onsuccess  = function(event){
+    console.log("DB: Success opening DB", event);
+    var db = event.target.result;
+
+    var transaction = db.transaction([DB_TABLE],"readwrite");
+
+    transaction.oncomplete = function(event) {
+        console.log("Tx Success");
+    };
+
+    transaction.onerror = function(event) {
+        console.error("Tx Error", event);
+    };
+
+    var objectStore = transaction.objectStore(DB_TABLE);
+
+    objectStore.add({'id': DB_KEY, 
+                     //'subscription_id' : subscriptionId,
+                     'endpoint' : endpoint
+                      });
+
+  };
+
+}
+
 function sendSubscriptionToServer(tel, slugname, subscription) {
+  storeInIndexDB(subscription.endpoint);
+
 	Meteor.call(
 		'update_subscription', 
 		tel, slugname, navigator.userAgent, subscription.endpoint
