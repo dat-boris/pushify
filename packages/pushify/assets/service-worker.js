@@ -71,7 +71,7 @@ self.addEventListener('push', function(event) {
 
           // https://developers.google.com/cloud-messaging/chrome/client#receive_messages
           self.registration.showNotification(MSG_TITLE, {  
-            body: "Msg: "+JSON.stringify(data)+" Evt: "+event,  
+            body: data.msg,  
             icon: MSG_ICON,  
             tag: MSG_TAG  
           })  
