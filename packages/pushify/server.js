@@ -30,14 +30,6 @@ Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
           );
       }
   );
-
-  console.log("Found result :"+result);
-
-  if (!result) {
-    var err = "No result found with: "+slugname+":"+result+")";
-    console.error(err);
-    throw err;
-  }
 });
 
 Picker.route('/getmsg/:endpoint', function(params, req, res, next) {
