@@ -80,6 +80,12 @@ SigninSchema = new SimpleSchema({
     optional: true 
   },  
 
+  "message": {
+    type: String,
+    label: "Message last seen",
+    optional: true 
+  },  
+
 });
 
 Signins.attachSchema( SigninSchema );

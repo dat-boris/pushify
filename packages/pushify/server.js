@@ -1,5 +1,5 @@
 
-Picker.route('/pushmsg/:slugname', function(params, req, res, next) {
+Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
   //var post = Posts.findOne(params._id);
 
   var slugname = params.slugname;
@@ -7,33 +7,37 @@ Picker.route('/pushmsg/:slugname', function(params, req, res, next) {
     throw "No slugname specified!";
   }
 
+  var msg = params.msg;
+
   // TODO: cannot get post content so using get for now.
   //http://stackoverflow.com/questions/32705484/how-do-i-access-http-post-body-form-data-with-meteors-webapp-or-anything-els
-  console.log("Setting post content for slug ["+slugname+"]: "+req.body)
+  console.log("Setting post content for slug ["+slugname+"]: "+msg)
 
-  result = Signins.update(
-      {
-          slugname: slugname,
-      },
+  var result = Signins.update(
+      {slugname: slugname},
       {
           $set: {
-              message : req.body,
+             message : msg,
           }
+      },
+      function (err, cursor) {
+        sendNotification(
+          slugname,  // slug
+          "Adding the messages to be sent", // message
+          function (err, result) {
+              res.end(result);
+          }
+          );
       }
   );
+
+  console.log("Found result :"+result);
+
   if (!result) {
-    var err = "No result found with: "+slugname+":"+clean_tel+"("+result+")";
+    var err = "No result found with: "+slugname+":"+result+")";
     console.error(err);
     throw err;
   }
-
-  sendNotification(
-    slugname,  // slug
-    "Adding the messages to be sent", // message
-    function (err, result) {
-        res.end(result);
-    }
-    )
 });
 
 Picker.route('/getmsg/:endpoint', function(params, req, res, next) {
@@ -47,7 +51,7 @@ Picker.route('/getmsg/:endpoint', function(params, req, res, next) {
     var msg = signin.message;
     console.log("Got message", msg);
     res.end(JSON.stringify({
-      'msg' : msg
+      'msg' : msg || "(undefined)"
     }));
   });
 
