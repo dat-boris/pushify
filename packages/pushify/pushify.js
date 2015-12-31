@@ -116,6 +116,8 @@ function storeInIndexDB(endpoint) {
 
     var transaction = db.transaction([DB_TABLE],"readwrite");
 
+    var objectStore = transaction.objectStore(DB_TABLE);
+
     transaction.oncomplete = function(event) {
         console.log("Tx Success");
     };
@@ -124,9 +126,7 @@ function storeInIndexDB(endpoint) {
         console.error("Tx Error", event);
     };
 
-    var objectStore = transaction.objectStore(DB_TABLE);
-
-    objectStore.add({'id': DB_KEY, 
+    objectStore.put({'id': DB_KEY, 
                      //'subscription_id' : subscriptionId,
                      'endpoint' : endpoint
                       });
