@@ -18,6 +18,7 @@ Package.onUse(function(api) {
     'http',
     'accolver:twilio-meteor',
     'meteorhacks:picker',
+    'aldeed:simple-schema',
     ]);
   api.addFiles([
     'lib/collection.js',
