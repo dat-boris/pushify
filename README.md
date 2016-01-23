@@ -36,4 +36,7 @@ make run-server
 
 This will run the server on http://localhost:3000
 
+# Meteor best practice readings
 
+* Boiler plate - https://github.com/matteodem/meteor-boilerplate
+* Scaffolding structure - http://meteortips.com/first-meteor-tutorial/structure/
