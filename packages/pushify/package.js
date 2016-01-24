@@ -9,7 +9,7 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
   api.use([
-    'react',
+    'react@0.14.3',
     'kadira:flow-router-ssr',
     'kadira:dochead',
     'kadira:react-layout',
@@ -44,7 +44,7 @@ Package.onUse(function(api) {
 
 Package.onTest(function(api) {
   api.use(['react', 
-    'sanjo:jasmine@0.20.2',
+    'sanjo:jasmine@0.21.0',
     'meteorhacks:fast-render@2.10.0',  // workaround bug in https://github.com/kadirahq/fast-render/issues/132
     'sketchytechky:pushify',
     'http'
