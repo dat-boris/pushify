@@ -22,7 +22,6 @@ FlowRouter.route("/getchrome/", {
 
 FlowRouter.route("/subscribed/:slugname", {
     action: function() {
-        checkChrome();
         ReactLayout.render(SubscribedLayout);
     }
 });
