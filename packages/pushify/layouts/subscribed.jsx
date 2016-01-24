@@ -12,7 +12,7 @@ SubscribedLayout = React.createClass({
       <li>Post to the following URL</li>
     </ol>
     <pre>
-    curl http://pushify.meteor.com/pushmsg/{this.getSlugName()}/[message here]
+    curl -d "m=[message here]" http://pushify.meteor.com/pushmsg/{this.getSlugName()}/
     </pre>
 
     <form onSubmit={this.submitTel}>

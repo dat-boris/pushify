@@ -30,7 +30,6 @@ FlowRouter.route("/subscribed/:slugname", {
 FlowRouter.route("/subscribe/:slugname/:tel", {
     triggersEnter : [checkChrome],
     action: function() {
-        checkChrome();
         subscribePushNotification(
             FlowRouter.getParam('tel'),
             FlowRouter.getParam('slugname')
