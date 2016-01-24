@@ -2,6 +2,8 @@
 
 Simple push notification subscription service
 
+![codeship](https://codeship.com/projects/32736800-a464-0133-ac31-16383a36e4d1/status)
+
 ![XKCD - compiling](https://imgs.xkcd.com/comics/compiling.png)
 
 Imagine getting push notifiaction when the compilation is done!
