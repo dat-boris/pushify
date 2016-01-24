@@ -1,4 +1,10 @@
 
+Picker.route('/test_endpoint', function(params, req, res, next) {
+    res.end(JSON.stringify({
+      'test' : 1
+    }));
+});
+
 Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
   //var post = Posts.findOne(params._id);
 

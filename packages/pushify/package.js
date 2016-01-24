@@ -46,8 +46,10 @@ Package.onTest(function(api) {
   api.use(['react', 
     'sanjo:jasmine@0.20.2',
     'meteorhacks:fast-render@2.10.0',  // workaround bug in https://github.com/kadirahq/fast-render/issues/132
-    'sketchytechky:pushify'
+    'sketchytechky:pushify',
+    'http'
     ]);
   
   api.addFiles('tests/client/component-spec.js', ['client']);
+  api.addFiles('tests/server/api.js', ['server']);
 });
