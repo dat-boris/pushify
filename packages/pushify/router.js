@@ -2,7 +2,7 @@
  * Function for checking if we are using chrome
  */
 function checkChrome(context, redirect) {
-    if (navigator.userAgent.indexOf('Chrome')===-1 && process.env.NODE_ENV==='production') {
+    if (navigator.userAgent.indexOf('Chrome')===-1) {
         redirect('/getchrome/');
     }
 }
