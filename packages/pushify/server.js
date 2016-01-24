@@ -1,3 +1,24 @@
+//https://themeteorchef.com/snippets/server-side-routing-with-picker/
+var bodyParser = Npm.require( 'body-parser' );
+
+// Define our middleware using the Picker.middleware() method.
+Picker.middleware( bodyParser.json() );
+Picker.middleware( bodyParser.urlencoded( { extended: false } ) );
+
+/**
+ * Post route for the slug
+ */
+Picker.route('/pushmsg/:slugname/', function(params, req, res, next) {
+  // TODO: cannot get post content so using get for now.
+  //http://stackoverflow.com/questions/32705484/how-do-i-access-http-post-body-form-data-with-meteors-webapp-or-anything-els
+  var slugname = params.slugname;
+  if (!slugname) {
+    throw "No slugname specified!";
+  }
+  var msg = req.body.m || req.body.msg || req.body.message;
+  console.log("Posting message for ["+slugname+"]:"+msg);
+  pushMessage(res, slugname, msg);
+});
 
 Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
   //var post = Posts.findOne(params._id);
@@ -6,11 +27,12 @@ Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
   if (!slugname) {
     throw "No slugname specified!";
   }
-
   var msg = params.msg;
+  pushMessage(res, slugname, msg);
+});
 
-  // TODO: cannot get post content so using get for now.
-  //http://stackoverflow.com/questions/32705484/how-do-i-access-http-post-body-form-data-with-meteors-webapp-or-anything-els
+
+function pushMessage(res, slugname, msg) {
   console.log("Setting post content for slug ["+slugname+"]: "+msg)
 
   var result = Signins.update(
@@ -25,12 +47,15 @@ Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
           slugname,  // slug
           "Adding the messages to be sent", // message
           function (err, result) {
-              res.end(result);
+            res.end(JSON.stringify({
+              'success' : (!err),
+              'response' : result
+            }));
           }
           );
       }
-  );
-});
+  );  
+}
 
 Picker.route('/getmsg/:endpoint', function(params, req, res, next) {
   var endpoint = decodeURIComponent(params.endpoint);
@@ -137,6 +162,7 @@ sendNotification = function (slugname, msg, callback) {
     slugname: slugname,
   }).map(function (signin) {
     var reg_id = signin.subscription_reg_id;
+    console.log("Checking signin: "+signin);
     if (reg_id) {
       return reg_id.split('/').pop();
     }
@@ -165,8 +191,11 @@ sendNotification = function (slugname, msg, callback) {
       })
     }, function (err, result) {
 
-      if (err) throw err;
-      console.log("Sucessfully pushed message! "+result);
-      callback(null, result.content);
+      if (err) {
+        console.warn("Error: "+err);
+      } else {
+        console.log("Sucessfully pushed message! "+result);
+      }
+      callback(err, result.content);
     });
 }
