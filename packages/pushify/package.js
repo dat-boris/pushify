@@ -13,7 +13,7 @@ Package.onUse(function(api) {
     'kadira:flow-router-ssr',
     'kadira:dochead',
     'kadira:react-layout',
-    'aldeed:collection2',
+    'aldeed:collection2@2.8.0',
     'ecmascript',
     'http',
     'accolver:twilio-meteor',
