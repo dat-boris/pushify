@@ -27,6 +27,7 @@ Package.onUse(function(api) {
     'router.js',
     'layouts/home.jsx',
     'layouts/subscribed.jsx',
+    'layouts/getchrome.jsx',
     ], ['client','server']
     );
     api.addFiles([

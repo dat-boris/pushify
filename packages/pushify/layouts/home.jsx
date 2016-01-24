@@ -36,6 +36,7 @@ HomeLayout = React.createClass({
 
       <form onSubmit={this.submitTel}>
         <input type="tel" ref="usrtel" placeholder="Enter tel here"/>
+        <input type="submit"/>
       </form>
     </section>
 
