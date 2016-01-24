@@ -1,3 +1,25 @@
+//https://themeteorchef.com/snippets/server-side-routing-with-picker/
+var bodyParser = Npm.require( 'body-parser' );
+
+// Define our middleware using the Picker.middleware() method.
+Picker.middleware( bodyParser.json() );
+Picker.middleware( bodyParser.urlencoded( { extended: false } ) );
+
+/**
+ * Post route for the slug
+ */
+Picker.route('/pushmsg/:slugname/', function(params, req, res, next) {
+  // TODO: cannot get post content so using get for now.
+  //http://stackoverflow.com/questions/32705484/how-do-i-access-http-post-body-form-data-with-meteors-webapp-or-anything-els
+  var slugname = params.slugname;
+  if (!slugname) {
+    throw "No slugname specified!";
+  }
+  var msg = req.body.m || req.body.msg || req.body.message;
+  console.log("Posting message for ["+slugname+"]:"+msg);
+  pushMessage(res, slugname, msg);
+});
+
 Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
   //var post = Posts.findOne(params._id);
 
@@ -5,11 +27,12 @@ Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
   if (!slugname) {
     throw "No slugname specified!";
   }
-
   var msg = params.msg;
+  pushMessage(res, slugname, msg);
+});
 
-  // TODO: cannot get post content so using get for now.
-  //http://stackoverflow.com/questions/32705484/how-do-i-access-http-post-body-form-data-with-meteors-webapp-or-anything-els
+
+function pushMessage(res, slugname, msg) {
   console.log("Setting post content for slug ["+slugname+"]: "+msg)
 
   var result = Signins.update(
@@ -31,8 +54,8 @@ Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
           }
           );
       }
-  );
-});
+  );  
+}
 
 Picker.route('/getmsg/:endpoint', function(params, req, res, next) {
   var endpoint = decodeURIComponent(params.endpoint);

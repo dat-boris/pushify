@@ -17,8 +17,9 @@ Package.onUse(function(api) {
     'ecmascript',
     'http',
     'accolver:twilio-meteor',
-    'meteorhacks:picker',
+    'meteorhacks:picker@1.0.3',
     'aldeed:simple-schema',
+    'meteorhacks:npm@1.5.0',
     ]);
   api.addFiles([
     'lib/collection.js',
@@ -37,6 +38,10 @@ Package.onUse(function(api) {
     'assets/manifest.json',
     'assets/service-worker.js'
     ], 'client')
+
+  Npm.depends({
+    "body-parser": "1.14.2"
+  });
 
   // XXX: This is only exported for the sake of testing :-(
   api.export("HomeLayout", "client");

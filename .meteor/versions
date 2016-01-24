@@ -56,8 +56,10 @@ logging@1.0.8
 mdg:validation-error@0.2.0
 meteor@1.1.10
 meteor-base@1.0.1
+meteorhacks:async@1.0.0
 meteorhacks:fast-render@2.10.0
 meteorhacks:inject-data@1.4.1
+meteorhacks:npm@1.5.0
 meteorhacks:picker@1.0.3
 mike:mocha@0.6.6
 mike:mocha-core@0.1.0

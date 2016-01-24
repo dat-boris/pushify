@@ -1,0 +1,9 @@
+{
+    "name": "pushify",
+    "version": "0.0.1",
+    "description": "Simple website that define push notification",
+    "author": "sketchytechky",
+    "dependencies": {
+	  "body-parser": "1.14.2"
+	}
+}
