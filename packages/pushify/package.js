@@ -40,6 +40,7 @@ Package.onUse(function(api) {
 
   // XXX: This is only exported for the sake of testing :-(
   api.export("HomeLayout", "client");
+  api.export("Signins", "server");
 });
 
 Package.onTest(function(api) {

@@ -1,10 +1,3 @@
-
-Picker.route('/test_endpoint', function(params, req, res, next) {
-    res.end(JSON.stringify({
-      'test' : 1
-    }));
-});
-
 Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
   //var post = Posts.findOne(params._id);
 
@@ -31,7 +24,10 @@ Picker.route('/pushmsg/:slugname/:msg', function(params, req, res, next) {
           slugname,  // slug
           "Adding the messages to be sent", // message
           function (err, result) {
-              res.end(result);
+            res.end(JSON.stringify({
+              'success' : (!err),
+              'response' : result
+            }));
           }
           );
       }
@@ -143,6 +139,7 @@ sendNotification = function (slugname, msg, callback) {
     slugname: slugname,
   }).map(function (signin) {
     var reg_id = signin.subscription_reg_id;
+    console.log("Checking signin: "+signin);
     if (reg_id) {
       return reg_id.split('/').pop();
     }
@@ -171,8 +168,11 @@ sendNotification = function (slugname, msg, callback) {
       })
     }, function (err, result) {
 
-      if (err) throw err;
-      console.log("Sucessfully pushed message! "+result);
-      callback(null, result.content);
+      if (err) {
+        console.warn("Error: "+err);
+      } else {
+        console.log("Sucessfully pushed message! "+result);
+      }
+      callback(err, result.content);
     });
 }

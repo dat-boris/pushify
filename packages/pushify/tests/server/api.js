@@ -1,9 +1,41 @@
 describe("Server API", function () {
   var hostname = Meteor.absoluteUrl();
-  it("should return true", function () {
-    HTTP.get(hostname+"/test_endpoint", function(error, response) {
-    	console.log("Got response: "+response.content)
-        expect(response.content).toBeTruthy(true);
+  var testSlugName = "test-slug";
+  var testSubscription = "google/random_subscription_id";
+
+  beforeEach(function(done) {
+  	console.log("Inserting new signin...");
+    Signins.insert({
+      initial_cookie_id : Math.random().toString(),
+      initial_ip : "1.2.3.4",
+      initial_useragent : "Self test useragent",
+      tel: "1234567",
+      slugname : testSlugName,
+      subscription_reg_id : testSubscription
+    }, function () {
+    	done();
     });
   });
+
+  it("should allow test message", function (done) {
+  	var content = null;
+    // var subscriptions = Signins.find({slugname: testSlugName});
+
+    HTTP.get(hostname+"/pushmsg/"+testSlugName+"/test_message", function(error, response) {
+    	console.log("Got response: "+response.content);
+    	var responseData = JSON.parse(response.content);
+    	// since we are faking the subscription id, this will fail
+        expect(responseData.success).toBe(false);
+
+        HTTP.get(
+        	hostname+"/getmsg/"+encodeURIComponent(testSubscription), 
+        	function (err, response) {
+	    		console.log("Got message: "+response.content);
+		    	var responseData = JSON.parse(response.content);
+	        	expect(responseData.msg).toBe("test_message");
+		        done();
+	        }
+	    );
+    });
+  });  
 });
