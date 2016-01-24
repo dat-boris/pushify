@@ -17,9 +17,9 @@ describe("CountHomeLayout Component", function() {
     };
   });
 
-  it("should have default count", function() {
+  it("should have input form", function() {
     renderWithProps({});
-    expect(component.state.count).toBe(0);
+    TestUtils.findRenderedDOMComponentWithClass(component, "content")
   });
 
 });
