@@ -32,6 +32,8 @@ To get it running on codeship, you will need to setup meteor without using sudo.
 
 ```
 git clone https://github.com/meteor/meteor.git ~/meteor
+# checking out 1.2.1 https://github.com/meteor/meteor/releases/tag/release%2FMETEOR%401.2.1
+pushd ~/meteor; git checkout cc53065; popd
 export PATH=~/meteor/:$PATH
 npm install -g meteorite
 ```
