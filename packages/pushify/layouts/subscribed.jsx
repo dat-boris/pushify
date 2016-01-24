@@ -17,6 +17,7 @@ SubscribedLayout = React.createClass({
 
     <form onSubmit={this.submitTel}>
       <input type="tel" name="usrtel" placeholder="Subscribe another phone"/>
+      <input type="submit"/>
     </form>
 
 	</div>;
