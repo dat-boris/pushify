@@ -1,6 +1,6 @@
 # Pushify
 
-Simple push notification subscription service
+Simple push notification subscription service https://pushify.meteor.com
 
 ![codeship](https://codeship.com/projects/32736800-a464-0133-ac31-16383a36e4d1/status)
 
