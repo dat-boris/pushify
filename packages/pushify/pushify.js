@@ -7,7 +7,7 @@ var serviceWorkerUrl = '/packages/sketchytechky_pushify/assets/service-worker.js
 subscribePushNotification = function (tel, slugname) {
     // Check that service workers are supported, if so, progressively  
     // enhance and add push messaging support, otherwise continue without it.  
-    window.addEventListener('load', function() {
+    self.addEventListener('load', function() {
       if ('serviceWorker' in navigator) {  
         navigator.serviceWorker.register(serviceWorkerUrl)  
         .then(function (serviceWorkerRegistration) {
@@ -35,7 +35,7 @@ function initialiseState(tel, slugname, serviceWorkerRegistration) {
     }
 
     // Check if push messaging is supported  
-    if (!('PushManager' in window)) {  
+    if (!('PushManager' in self)) {  
       console.warn('Push messaging isn\'t supported.');  
       return;  
     }
