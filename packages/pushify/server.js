@@ -47,10 +47,12 @@ function pushMessage(res, slugname, msg) {
           slugname,  // slug
           "Adding the messages to be sent", // message
           function (err, result) {
-            res.end(JSON.stringify({
-              'success' : (!err),
-              'response' : result
-            }));
+            if (res) {
+              res.end(JSON.stringify({
+                'success' : (!err),
+                'response' : result
+              }));
+            }
           }
           );
       }
@@ -108,6 +110,10 @@ Meteor.methods({
             sendTwilio(client_context.tel, client_context.slugname);
           }
         );
+    },
+
+    post_message: function (client_context) {
+      pushMessage(null, client_context.slug, client_context.m);
     },
 
     update_subscription : function (tel, slugname, user_agent, subscription_endpoint) {
