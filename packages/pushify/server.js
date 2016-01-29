@@ -68,7 +68,7 @@ Picker.route('/getmsg/:endpoint', function(params, req, res, next) {
     subscription_reg_id : endpoint
   }).map(function (signin) {
     var msg = signin.message;
-    console.log("Got message", msg);
+    console.log("Got message", signin.slugname, msg);
     res.end(JSON.stringify({
       'msg' : msg || "(undefined)"
     }));
