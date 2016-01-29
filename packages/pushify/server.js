@@ -168,7 +168,7 @@ sendNotification = function (slugname, msg, callback) {
     slugname: slugname,
   }).map(function (signin) {
     var reg_id = signin.subscription_reg_id;
-    console.log("Checking signin: "+signin);
+    console.log("Checking signin: "+signin.slugname+" "+signin.tel);
     if (reg_id) {
       return reg_id.split('/').pop();
     }
