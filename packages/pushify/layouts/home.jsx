@@ -20,7 +20,7 @@ HomeLayout = React.createClass({
         console.error ( error ); //info about what went wrong
         throw error;
       } else {
-        FlowRouter.go('/subscribed/'+random_slug);
+        FlowRouter.go('/subscribe/'+random_slug+'/'+encodeURIComponent(tel));
       }
     }
     )

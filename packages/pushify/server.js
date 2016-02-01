@@ -47,10 +47,12 @@ function pushMessage(res, slugname, msg) {
           slugname,  // slug
           "Adding the messages to be sent", // message
           function (err, result) {
-            res.end(JSON.stringify({
-              'success' : (!err),
-              'response' : result
-            }));
+            if (res) {
+              res.end(JSON.stringify({
+                'success' : (!err),
+                'response' : result
+              }));
+            }
           }
           );
       }
@@ -66,7 +68,7 @@ Picker.route('/getmsg/:endpoint', function(params, req, res, next) {
     subscription_reg_id : endpoint
   }).map(function (signin) {
     var msg = signin.message;
-    console.log("Got message", msg);
+    console.log("Got message", signin.slugname, msg);
     res.end(JSON.stringify({
       'msg' : msg || "(undefined)"
     }));
@@ -108,6 +110,10 @@ Meteor.methods({
             sendTwilio(client_context.tel, client_context.slugname);
           }
         );
+    },
+
+    post_message: function (client_context) {
+      pushMessage(null, client_context.slug, client_context.m);
     },
 
     update_subscription : function (tel, slugname, user_agent, subscription_endpoint) {
@@ -162,7 +168,7 @@ sendNotification = function (slugname, msg, callback) {
     slugname: slugname,
   }).map(function (signin) {
     var reg_id = signin.subscription_reg_id;
-    console.log("Checking signin: "+signin);
+    console.log("Checking signin: "+signin.slugname+" "+signin.tel);
     if (reg_id) {
       return reg_id.split('/').pop();
     }
